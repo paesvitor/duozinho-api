@@ -1,14 +1,16 @@
+import "reflect-metadata";
 import express from "express";
-import { User } from "@entities/User";
+import { createConnection } from "typeorm";
+import routes from "./routes";
+import bodyParser from "body-parser";
 
-const app = express();
+const connection = createConnection()
+  .then(async (connection) => {
+    const app = express();
+    app.use(bodyParser.json());
+    app.use(routes);
+    app.listen(3000);
+  })
+  .catch((error) => console.log(error));
 
-app.get("/", (req, res) => {
-  const user = new User();
-
-  user.email = "mail";
-
-  return res.json({ message: "Hello world" });
-});
-
-app.listen(3000);
+export default connection;
