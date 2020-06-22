@@ -6,9 +6,8 @@ import { authMiddleware } from "@middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", authMiddleware, UserController.list);
-router.get("/:userId", authMiddleware, UserController.show);
-router.post("/", authMiddleware, UserController.create);
-router.patch("/", authMiddleware, UserController.update);
+// Actions
+router.get("/", authMiddleware, PhotoController.list);
+router.post("/", authMiddleware, PhotoController.create);
 
 export default router;

@@ -6,10 +6,11 @@ export class PhotoController {
   static async list(req: Request, res: Response) {
     try {
       const { user } = req;
+      const { userId } = req.query;
 
       const photos = await getRepository(Photo).find({
         where: {
-          user: user.id,
+          user: userId || user.id,
         },
       });
 

@@ -6,9 +6,7 @@ import { authMiddleware } from "@middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", authMiddleware, UserController.list);
-router.get("/:userId", authMiddleware, UserController.show);
-router.post("/", authMiddleware, UserController.create);
-router.patch("/", authMiddleware, UserController.update);
+router.post("/create", authMiddleware, RiotGamesController.create);
+router.post("/verify", authMiddleware, RiotGamesController.verify);
 
 export default router;
