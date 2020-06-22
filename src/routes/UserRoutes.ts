@@ -13,7 +13,7 @@ router.patch("/", UserController.update);
 // Actions
 router.get("/:userId/photos", PhotoController.list);
 router.post("/:userId/photos", PhotoController.save);
-router.post("/summoner/register", RiotGamesController.create);
-router.post("/summoner/verify", RiotGamesController.verify);
+router.post("/register", RiotGamesController.create);
+router.post("/verify", RiotGamesController.verify);
 
 export default router;
