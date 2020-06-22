@@ -13,20 +13,20 @@ export class PhotoController {
         },
       });
 
-      return res.send({ data: photos });
+      return res.send(photos);
     } catch (error) {
       return res.status(400).send({ error });
     }
   }
 
-  static async save(req: Request, res: Response) {
+  static async create(req: Request, res: Response) {
     try {
       const repository = await getRepository(Photo);
 
       const row = await repository.create({ ...req.body, user: req.user.id });
       await repository.save(row);
 
-      return res.send({ created: true });
+      return res.status(201).send({ created: true });
     } catch (error) {
       return res.status(400).send({ error });
     }

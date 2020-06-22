@@ -16,14 +16,14 @@ export class UserController {
     }
   }
 
-  static async save(req: Request, res: Response) {
+  static async create(req: Request, res: Response) {
     try {
       const repository = await getRepository(User);
 
       const user = await repository.create(req.body);
       const result = await repository.save(user);
 
-      return res.send({ user: result });
+      return res.status(201).send({ created: true });
     } catch (error) {
       return res.status(400).send({ error });
     }

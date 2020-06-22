@@ -32,7 +32,7 @@ export class RiotGamesController {
         verificationIcon,
       });
       await repository.save(row);
-      return res.send({ ok: true });
+      return res.status(201).send({ created: true });
     } catch (error) {
       console.log(error);
       return res.status(400).send({ error });
