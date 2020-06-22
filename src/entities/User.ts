@@ -7,12 +7,20 @@ import {
   OneToOne,
   JoinColumn,
   OneToMany,
+  BeforeInsert,
 } from "typeorm";
 import { Photo } from "./Photo";
 import { Summoner } from "./Summoner";
+import bcrypt from "bcrypt";
 
 @Entity()
 export class User {
+  @BeforeInsert()
+  async generatePassword() {
+    const hash = await bcrypt.hash(this.password, 10);
+    this.password = hash;
+  }
+
   @CreateDateColumn()
   @UpdateDateColumn()
   @PrimaryGeneratedColumn()
