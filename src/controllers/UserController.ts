@@ -31,17 +31,22 @@ export class UserController {
 
   static async show(req: Request, res: Response) {
     try {
+      const { user } = req;
       const { userId } = req.params;
 
-      const user = await getRepository(User).findOne(userId, {
+      const q = userId === "me" ? user.id : userId;
+
+      const summoner = await getRepository(Summoner).findOne({
+        where: { user: q },
+      });
+
+      const findUser = await getRepository(User).findOne(q, {
         relations: ["photos"],
       });
 
-      const summoner = await getRepository(Summoner).findOne({
-        where: { user: userId },
-      });
+      delete findUser.password;
 
-      return res.send({ ...user, summoner });
+      return res.send({ ...findUser, summoner });
     } catch (error) {
       console.log(error);
       return res.status(400).send({ error });
@@ -50,10 +55,8 @@ export class UserController {
 
   static async update(req: Request, res: Response) {
     try {
-      const { userId, ...rest } = req.body;
-
       const repository = await getRepository(User);
-      await repository.update({ id: userId }, rest);
+      await repository.update({ id: req.user.id }, req.body);
 
       return res.send({ updated: true });
     } catch (error) {

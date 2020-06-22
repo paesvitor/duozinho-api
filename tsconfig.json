@@ -18,8 +18,10 @@
     "paths": {
       "@entities/*": ["./src/entities/*"],
       "@controllers/*": ["./src/controllers/*"],
+      "@middlewares/*": ["./src/middlewares/*"],
       "@utils/*": ["./src/utils/*"],
-      "@config/*": ["./src/config/*"]
+      "@config/*": ["./src/config/*"],
+      "@types/*": ["src/@types/*"]
     }
   },
   "exclude": [

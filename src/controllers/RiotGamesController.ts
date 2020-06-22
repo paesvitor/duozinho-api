@@ -7,14 +7,17 @@ import { User } from "@entities/User";
 export class RiotGamesController {
   static async create(req: Request, res: Response) {
     try {
-      const { userId, summonerName } = req.body;
+      const { summonerName } = req.body;
+      const { user } = req;
 
       const repository = await getRepository(Summoner);
 
-      const findUser = await getRepository(Summoner).findOne(userId);
+      const findSummoner = await getRepository(Summoner).findOne({
+        user: user,
+      });
 
-      if (findUser) {
-        throw "Summoner already registered.";
+      if (findSummoner) {
+        throw "Invocador já registrado.";
       }
 
       const { data: summoner } = await riotGamesClient.get(
@@ -25,7 +28,7 @@ export class RiotGamesController {
 
       const row = await repository.create({
         ...summoner,
-        user: userId,
+        user: user.id,
         verificationIcon,
       });
       await repository.save(row);
@@ -38,10 +41,10 @@ export class RiotGamesController {
 
   static async verify(req: Request, res: Response) {
     try {
-      const { userId } = req.body;
+      const { user } = req;
 
       const summoner = await getRepository(Summoner).findOne({
-        where: { user: userId },
+        where: { user: user.id },
       });
 
       if (!summoner) {
@@ -57,7 +60,7 @@ export class RiotGamesController {
       }
 
       await await getRepository(Summoner).update(
-        { user: userId },
+        { user: user },
         { verified: true }
       );
 

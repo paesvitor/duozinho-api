@@ -5,11 +5,11 @@ import { Photo } from "@entities/Photo";
 export class PhotoController {
   static async list(req: Request, res: Response) {
     try {
-      const { userId } = req.params;
+      const { user } = req;
 
       const photos = await getRepository(Photo).find({
         where: {
-          user: userId,
+          user: user.id,
         },
       });
 
@@ -23,7 +23,7 @@ export class PhotoController {
     try {
       const repository = await getRepository(Photo);
 
-      const row = await repository.create(req.body);
+      const row = await repository.create({ ...req.body, user: req.user.id });
       await repository.save(row);
 
       return res.send({ created: true });

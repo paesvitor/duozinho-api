@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { getRepository } from "typeorm";
-import { Photo } from "@entities/Photo";
 import jwt from "jsonwebtoken";
 import authConfig from "@config/auth.json";
 import { User } from "@entities/User";

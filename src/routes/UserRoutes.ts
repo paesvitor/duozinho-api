@@ -1,19 +1,20 @@
 import express from "express";
-import { UserController } from "src/controllers/UserController";
+import { UserController } from "@controllers/UserController";
 import { PhotoController } from "@controllers/PhotoController";
 import { RiotGamesController } from "@controllers/RiotGamesController";
+import { authMiddleware } from "@middlewares/authMiddleware";
 
 const router = express.Router();
 
-router.get("/", UserController.list);
-router.post("/", UserController.save);
-router.get("/:userId", UserController.show);
-router.patch("/", UserController.update);
+router.get("/:userId", authMiddleware, UserController.show);
+router.get("/", authMiddleware, UserController.list);
+router.post("/", authMiddleware, UserController.save);
+router.patch("/", authMiddleware, UserController.update);
 
 // Actions
-router.get("/:userId/photos", PhotoController.list);
-router.post("/:userId/photos", PhotoController.save);
-router.post("/register", RiotGamesController.create);
-router.post("/verify", RiotGamesController.verify);
+router.get("/:userId/photos", authMiddleware, PhotoController.list);
+router.post("/:userId/photos", authMiddleware, PhotoController.save);
+router.post("/register", authMiddleware, RiotGamesController.create);
+router.post("/verify", authMiddleware, RiotGamesController.verify);
 
 export default router;
