@@ -1,11 +1,10 @@
 import express from "express";
 import { PhotoController } from "@controllers/PhotoController";
 import { authMiddleware } from "@middlewares/authMiddleware";
+import { OpController } from "@controllers/OpController";
 
 const router = express.Router();
 
-// Actions
-router.get("/", authMiddleware, PhotoController.list);
-router.post("/", authMiddleware, PhotoController.create);
+router.post("/", authMiddleware, OpController.create);
 
 export default router;

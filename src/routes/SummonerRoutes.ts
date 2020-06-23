@@ -1,6 +1,4 @@
 import express from "express";
-import { UserController } from "@controllers/UserController";
-import { PhotoController } from "@controllers/PhotoController";
 import { RiotGamesController } from "@controllers/RiotGamesController";
 import { authMiddleware } from "@middlewares/authMiddleware";
 

@@ -1,14 +1,12 @@
 import express from "express";
 import { UserController } from "@controllers/UserController";
-import { PhotoController } from "@controllers/PhotoController";
-import { RiotGamesController } from "@controllers/RiotGamesController";
 import { authMiddleware } from "@middlewares/authMiddleware";
 
 const router = express.Router();
 
 router.get("/", authMiddleware, UserController.list);
 router.get("/:userId", authMiddleware, UserController.show);
-router.post("/", authMiddleware, UserController.create);
+router.post("/", UserController.create);
 router.patch("/", authMiddleware, UserController.update);
 
 export default router;
